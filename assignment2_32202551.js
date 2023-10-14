@@ -18,6 +18,8 @@ var thetaLoc;
 
 var flag = true;
 
+var speed = 100;
+
 window.onload = function init()
 {
     canvas = document.getElementById( "gl-canvas" );
@@ -53,7 +55,11 @@ window.onload = function init()
     gl.enableVertexAttribArray( vPosition );
 
     thetaLoc = gl.getUniformLocation(program, "theta"); 
+
     
+    document.getElementById("slider").onchange = function(event) {
+        speed = 100 - event.target.value;
+    };
     
     document.getElementById( "xButton" ).onclick = function () {
         axis = xAxis;
@@ -135,6 +141,10 @@ function render()
 
     gl.drawArrays( gl.TRIANGLES, 0, NumVertices );
 
-    requestAnimFrame( render );
+
+    setTimeout(
+        function () {requestAnimFrame( render );},
+        speed
+    );
 }
 
